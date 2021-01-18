@@ -1,7 +1,7 @@
 # Importamos la libreria tidyverse para utilizar las funciones de dplyr
 library(tidyverse)
 
-# Vamos a descargar múltiples archivos csv, por lo que configuramos nuestro directorio, descargamos
+# Vamos a descargar mÃºltiples archivos csv, por lo que configuramos nuestro directorio, descargamos
 # y leemos los archivos
 # setwd("C:/Users/valen/Documents/Bedu/Mod2/Programacion-con-R-Santander-master/Programacion-con-R-Santander-master/Sesion-02/Postwork_Al")
 url1 <- "https://www.football-data.co.uk/mmz4281/1718/SP1.csv"
@@ -48,7 +48,7 @@ class(laliga.1920$Date)
 # de la temporada 2017-2018 es distinto. Se procede entonces a cambiar el formato de esta fecha, asi
 # como convertir en tipo fecha en los otros 2 df (originalmente siendo tipo factor).
 ?as.Date
-laliga.1718 <- laliga.1718 %>% mutate(Date = as.Date(Date,"%d/%m/%Y"));head(laliga.1718)
+laliga.1718 <- laliga.1718 %>% mutate(Date = as.Date(Date,"%d/%m/%y"));head(laliga.1718)
 laliga.1819 <- laliga.1819 %>% mutate(Date = as.Date(Date,"%d/%m/%Y"));head(laliga.1819)
 laliga.1920 <- laliga.1920 %>% mutate(Date = as.Date(Date,"%d/%m/%Y"));head(laliga.1920)
 str(laliga.1718);str(laliga.1819);str(laliga.1920)

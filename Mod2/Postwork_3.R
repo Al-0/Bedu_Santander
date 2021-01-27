@@ -3,14 +3,14 @@ library(ggplot2)
 library(dplyr)
 
 # Declaramos nuestro directorio de trabajo, y de este, descargamos el archivo "laLiga.csv",
-# el cuál se obtuvo escribiendo en un archivo el data frame resultante del postwork anterior.
+# el cuÃ¡l se obtuvo escribiendo en un archivo el data frame resultante del postwork anterior.
 setwd("C:/Users/valen/Documents/Bedu/Mod2/Programacion-con-R-Santander-master/Programacion-con-R-Santander-master/Sesion-03/Postwork_Al")
 laLiga <- read.csv("laLiga.csv")
-head(laliga)
-view(laLiga)
+head(laLiga)
+View(laLiga)
 
 
-## 1.Con el último data frame obtenido en el postwork de la sesión 2, elabora tablas de 
+## 1.Con el Ãºltimo data frame obtenido en el postwork de la sesiÃ³n 2, elabora tablas de 
 ## frecuencias relativas para estimar las siguientes probabilidades:
 # La probabilidad (marginal) de que el equipo que juega en casa anote x goles (x=0,1,2,)
 home <- round(table(laLiga$FTHG) / nrow(laLiga), 4);home
@@ -23,7 +23,7 @@ conditional <- round(table(laLiga$FTHG, laLiga$FTAG) / nrow(laLiga), 4);conditio
 
 
 ## 2. Realiza lo siguiente:
-# Un gráfico de barras para las probabilidades marginales estimadas del número de goles 
+# Un grÃ¡fico de barras para las probabilidades marginales estimadas del nÃºmero de goles 
 # que anota el equipo de casa
 home <- as.data.frame(home)  
 head(home)
@@ -34,7 +34,7 @@ home %>% ggplot() + aes(x = Goles, y = Probabilidad_marginal) +
   geom_col(color = 'black', fill = "white") +
   ggtitle("Probabilidad de marcar gol como local. La Liga, 17-20") +
   theme_dark()
-# Un gráfico de barras para las probabilidades marginales estimadas del número de goles 
+# Un grÃ¡fico de barras para las probabilidades marginales estimadas del nÃºmero de goles 
 # que anota el equipo visitante.
 away <- as.data.frame(away)  
 head(away)
@@ -45,7 +45,7 @@ away %>% ggplot() + aes(x = Goles, y = Probabilidad_marginal) +
   geom_col(color = 'white', fill = "black") +
   ggtitle("Probabilidad de marcar gol como visitante. La Liga, 17-20") +
   theme_light()
-# Un HeatMap para las probabilidades conjuntas estimadas de los números de goles que 
+# Un HeatMap para las probabilidades conjuntas estimadas de los nÃºmeros de goles que 
 # anotan el equipo de casa y el equipo visitante en un partido.
 conditional <- as.data.frame(conditional);conditional
 conditional <- conditional %>% rename(Local = Var1, Visita = Var2, Probabilidad_marginal = Freq)

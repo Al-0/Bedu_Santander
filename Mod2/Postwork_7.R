@@ -1,15 +1,15 @@
-## Declaramos la librerÌa mongolite para poder comunicarnos con nuestro cluster en Atlas
+## Declaramos la librer√≠a mongolite para poder comunicarnos con nuestro cluster en Atlas
 #install.packages("mongolite")
 library(mongolite)
 
-# Declaramos el wd en la carpeta donde tenemos "data.csv" y guardamos la informaciÛn en un df
+# Declaramos el wd en la carpeta donde tenemos "data.csv" y guardamos la informaci√≥n en un df
 setwd("C:/Users/valen/Documents/Bedu/Mod2/Programacion-con-R-Santander-master/Programacion-con-R-Santander-master/Sesion-07/Postwork_Al")
 data <- read.csv("data.csv")
 class(data)
 head(data)
 
-# Utilizamos la instrucciÛn 'mongo' para crear una conexiÛn al cluster
-# Entramos el nombre de la colecciÛn y base de datos para crearlas en el cluster
+# Utilizamos la instrucci√≥n 'mongo' para crear una conexi√≥n al cluster
+# Entramos el nombre de la colecci√≥n y base de datos para crearlas en el cluster
 ?mongo
 m <- mongo(
   collection = "match",
@@ -18,14 +18,14 @@ m <- mongo(
 )
 m
 
-# Insertamos la informaciÛn anteriormente leÌda del csv en la base de datos
+# Insertamos la informaci√≥n anteriormente le√≠da del csv en la base de datos
 m$insert(data)
 
-# Realizamos un count para conocer el n˙mero de registros de la base
+# Realizamos un count para conocer el n√∫mero de registros de la base
 m$count()
 
-# Se realiza la siguiente consulta para conocer el n˙mero de goles que metiÛ el Real Madrid
-# el 20 de diciembre de 2015, asÌ como el equipo contra el que jugÛ
+# Se realiza la siguiente consulta para conocer el n√∫mero de goles que meti√≥ el Real Madrid
+# el 20 de diciembre de 2015, as√≠ como el equipo contra el que jug√≥
 full_document <- m$find();
 summary(full_document)
 query <- m$find('{
@@ -35,13 +35,32 @@ query <- m$find('{
       {"AwayTeam" : "Real Madrid"}
   ]
 }');query
-## Como podemos observar, la query no encuentra ning˙n resultado,lo cual se debe a que el csv
-## proporcionado sÛlo contiene los resultados de las temporadas 2017 a 2020. Si existiera el
-## registro de la temporada 2015-2016, podrÌamos ver que aquella noche decembrina de hace ya
-## un lusto el equipo madrileÒo le propinÛ una reverenda goleada de 10-2 al Rayo Vallecano en
-## la cancha del monumental estadio Santiago BernabÈu. °Hala Madrid!
+## Como podemos observar, la query no encuentra ning√∫n resultado,lo cual se debe a que el csv
+## proporcionado s√≥lo contiene los resultados de las temporadas 2017 a 2020. Si existiera el
+## registro de la temporada 2015-2016, podr√≠amos ver que aquella noche decembrina de hace ya
+## un lusto el equipo madrile√±o le propin√≥ una reverenda goleada de 10-2 al Rayo Vallecano en
+## la cancha del monumental estadio Santiago Bernab√©u. ¬°Hala Madrid!
 
-# Agregamos una nueva colecciÛn a la base de datos, en esta ocasiÛn utilizando el df 'mtcars'
+### Correcci√≥n al 03 de Febrero de 2021
+# Obtenemos la informaci√≥n de la temporada 2015-2016
+url <- "https://www.football-data.co.uk/mmz4281/1516/SP1.csv"
+data2 <- read.csv(url)
+head(data2)
+data2 <- data2 %>% select(Date:FTR) %>% mutate(Date = as.Date(Date, "%d/%m/%y"));head(data2)
+# Cargamos esta informaci√≥n a la base de datos
+m$insert(data2)
+m$count()
+# Ahora realizamos nuevamente la consulta anterior
+query <- m$find('{
+  "Date" : "2015-12-20",
+  "$or" : [
+      {"HomeTeam" : "Real Madrid"},
+      {"AwayTeam" : "Real Madrid"}
+  ]
+}');query
+# Como podemos observar, vemos confirmada esa goleada b√°rbara anteriormente descrita.
+
+# Agregamos una nueva colecci√≥n a la base de datos, en esta ocasi√≥n utilizando el df 'mtcars'
 summary(mtcars)
 mtcars_collection <- mongo(
   collection = "mtcars",

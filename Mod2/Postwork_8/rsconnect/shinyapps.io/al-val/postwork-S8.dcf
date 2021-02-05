@@ -1,0 +1,12 @@
+name: postwork-S8
+title: postwork-S8
+username:
+account: al-val
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3586362
+bundleId: 4183215
+url: https://al-val.shinyapps.io/postwork-S8/
+when: 1612494205.21514
+asMultiple: FALSE
+asStatic: FALSE
